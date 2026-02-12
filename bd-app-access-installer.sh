@@ -7,7 +7,7 @@ set -euo pipefail
 #  VPS IP     : 167.235.48.96
 #  Email      : scbuild24@gmail.com
 #  Zone ID    : ae28459b7ca62debaba87329cbc13555
-#  Cloudflare Global API Key : -2bbba8028a4ceb628b79e4c21feb35339b0c0
+#  Cloudflare API Token : aAkF0i-o5Pfcq-e7Flb1zpxvzKQmtdtjTci_MWcI
 #  Upstream DNS (BD-like) : 103.145.164.32
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -16,7 +16,7 @@ DOMAIN="bkdns.shop"
 VPS_IP="167.235.48.96"
 EMAIL="scbuild24@gmail.com"
 CF_ZONE_ID="ae28459b7ca62debaba87329cbc13555"
-CF_API_KEY="-2bbba8028a4ceb628b79e4c21feb35339b0c0"   # Global API Key (not token)
+CF_API_TOKEN="aAkF0i-o5Pfcq-e7Flb1zpxvzKQmtdtjTci_MWcI"   # Updated API Token
 UPSTREAM_DNS="103.145.164.32"                          # Change if not working
 
 SUBDOMAIN="dns.${DOMAIN}"                              # Recommended for Private DNS: dns.bkdns.shop
@@ -102,11 +102,10 @@ dig @127.0.0.1 -p 5053 example.com +short || { echo -e "${RED}cloudflared failed
 # 5. Install Nginx + Certbot with Cloudflare plugin
 apt install -y nginx certbot python3-certbot-dns-cloudflare
 
-# Cloudflare credentials (Global API Key format)
+# Cloudflare credentials (using API Token)
 mkdir -p /root/.secrets
 cat <<EOF > /root/.secrets/cloudflare.ini
-dns_cloudflare_email = ${EMAIL}
-dns_cloudflare_api_key = ${CF_API_KEY}
+dns_cloudflare_api_token = ${CF_API_TOKEN}
 EOF
 chmod 600 /root/.secrets/cloudflare.ini
 
